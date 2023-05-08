@@ -34,7 +34,7 @@ cd 'ResourcesMonitor/ResourcesMonitor.WPF'
 dotnet build -c Release
 
 # 进入生成目录
-cd bin/Debug/net6.0-windows/
+cd bin/Release/net6.0-windows/
 
 # 使用 kxpmaker 生成 kxp 插件包
 # 当前目录下会出现 net6.0-windows.kxp 文件
