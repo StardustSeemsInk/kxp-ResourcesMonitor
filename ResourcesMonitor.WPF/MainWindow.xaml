@@ -2,55 +2,60 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:ResourceMonitor.WPF"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ResourceMonitor"
-        mc:Ignorable="d"
-        Title="SuspensionBall" Height="100" Width="100"
+        Title="SuspensionBall"
+        Width="110"
+        Height="100"
         AllowsTransparency="True"
         Background="Transparent"
+        Closed="Window_Closed"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
         Topmost="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        Closed="Window_Closed">
+        mc:Ignorable="d">
     <Window.Resources>
         <ContextMenu x:Key="ContextMenu">
-            <MenuItem Name="Exit" Header="退出" Click="Exit_Click"/>
+            <MenuItem Name="Exit"
+                      Click="Exit_Click"
+                      Header="退出"/>
         </ContextMenu>
     </Window.Resources>
-    <Grid>
-        <TextBlock
-            Name="tbCpuPercent"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            FontSize="20"
-            Foreground="#66ccff"
-            Text="111" ContextMenu="{StaticResource ContextMenu}" />
-        <Ellipse
-            Name="tbCpuPercentPoint"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Height="10"
-            Width="10"
-            Fill="#66ccff"
-            ContextMenu="{StaticResource ContextMenu}" 
-            ToolTipService.Placement="Left" ToolTipService.InitialShowDelay="10" ToolTipService.ShowDuration="7000">
-              <Ellipse.ToolTip>
+    <Grid Margin="5">
+        <TextBlock Name="View_CpuPercent"
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Center"
+                   ContextMenu="{StaticResource ContextMenu}"
+                   FontSize="20"
+                   Foreground="#66ccff"
+                   Text="111"/>
+        <Ellipse Name="View_CpuPercentPoint"
+                 Width="10"
+                 Height="10"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Center"
+                 ContextMenu="{StaticResource ContextMenu}"
+                 Fill="#66ccff"
+                 ToolTipService.InitialShowDelay="10"
+                 ToolTipService.Placement="Left"
+                 ToolTipService.ShowDuration="7000">
+            <Ellipse.ToolTip>
                 <ToolTip>
                     <DockPanel Width="60" Height="20">
-                        <TextBlock x:Name="tbCpuPercentPointToolTipText">CPU占用率</TextBlock>
-                  </DockPanel>
+                        <TextBlock x:Name="View_CpuPercentPointToolTipText">CPU占用率</TextBlock>
+                    </DockPanel>
                 </ToolTip>
-              </Ellipse.ToolTip>
+            </Ellipse.ToolTip>
         </Ellipse>
 
-        <TextBlock
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            FontSize="10"
-            Foreground="#66ccff"
-            Text="资源监视器" ContextMenu="{StaticResource ContextMenu}"/>
+        <TextBlock HorizontalAlignment="Center"
+                   VerticalAlignment="Bottom"
+                   ContextMenu="{StaticResource ContextMenu}"
+                   FontSize="14"
+                   Foreground="#66ccff"
+                   Text="资源监视器"/>
     </Grid>
 </Window>

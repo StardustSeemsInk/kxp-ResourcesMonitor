@@ -3,9 +3,9 @@ using ResourceMonitor.WPF;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Timers;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace ResourceMonitor;
 
@@ -17,43 +17,64 @@ public partial class MainWindow : Window, IIdentityInterface
     private readonly Controller controller;
 
     private readonly PerformanceCounter cpuCounter = new(
-        "Processor",
-        "% Processor Time",
+        "Processor Information",
+        "% Processor Utility",
         "_Total"
     );
 
-    private DispatcherTimer? timer = null;
+    //private readonly PerformanceCounter ramCounter = new PerformanceCounter(
+    //    "Memory",
+    //    "Available MBytes"
+    //);
+
+    private Timer? timer = null;
 
     public MainWindow()
     {
         InitializeComponent();
 
-        Loaded += new RoutedEventHandler(SB_Loaded);
+        Loaded += new RoutedEventHandler(Window_Loaded);
 
         controller = new(this);
 
         Closed += (_, _) => Environment.Exit(0);
     }
 
-    private void SB_Loaded(object sender, RoutedEventArgs e)
+    private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+        _ = cpuCounter.NextValue();
+
         // Init timer
-        timer = new DispatcherTimer()
+        timer = new()
         {
-            Interval = new TimeSpan(1000000), // 1s
+            Interval = 1 * 1000, // 1s
+            AutoReset = true,
         };
-        timer.Tick += (_, _) =>
+        timer.Elapsed += (_, _) =>
         {
-            var cpuUsage = cpuCounter.NextValue();
-            var cpuUsageStr = string.Format("{0:f2} %", cpuUsage);
+            var cpuUsageStr = $"{cpuCounter.NextValue():0.00} %";
 
-            //var ramAvailable = ramCounter.NextValue();
-            //string ramAvaiableStr = string.Format("{0} MB", ramAvailable);
-
-            tbCpuPercent.Text = cpuUsageStr;
+            Dispatcher.BeginInvoke(() => View_CpuPercent.Text = cpuUsageStr);
         };
 
         timer.Start();
+    }
+
+    private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed)
+            DragMove();
+    }
+
+    private void Window_Closed(object sender, EventArgs e) => Exit();
+
+    private void Exit_Click(object sender, RoutedEventArgs e) => Close();
+
+    private static void Exit()
+    {
+        Application.Current.Shutdown();
+
+        Environment.Exit(0);
     }
 
     #region IIdentityInterface 接口
@@ -173,24 +194,4 @@ public partial class MainWindow : Window, IIdentityInterface
     public string GetRootStartupFileName() => "ResourseMonitor.dll";
 
     #endregion
-
-    private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        if (e.LeftButton == MouseButtonState.Pressed)
-            DragMove();
-    }
-
-    private void Window_Closed(object sender, System.EventArgs e)
-    {
-        Application.Current.Shutdown();
-
-        Environment.Exit(0);
-    }
-
-    private void Exit_Click(object sender, RoutedEventArgs e)
-    {
-        Application.Current.Shutdown();
-
-        Environment.Exit(0);
-    }
 }
