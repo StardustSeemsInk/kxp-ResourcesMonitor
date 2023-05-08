@@ -15,7 +15,7 @@
 git clone git@githu.com:StardustSeemsInk/ResourcesMonitor.git
 
 # 进入项目目录
-cd `ResourcesMonitor/ResourcesMonitor.Runner`
+cd 'ResourcesMonitor/ResourcesMonitor.Runner'
 
 # 运行程序
 dotnet run
@@ -28,7 +28,7 @@ dotnet run
 git clone git@githu.com:StardustSeemsInk/ResourcesMonitor.git
 
 # 进入项目目录
-cd `ResourcesMonitor/ResourcesMonitor.WPF`
+cd 'ResourcesMonitor/ResourcesMonitor.WPF'
 
 # 使用 Release Profile 构建
 dotnet build -c Release
