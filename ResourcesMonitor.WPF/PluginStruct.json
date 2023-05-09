@@ -1,9 +1,9 @@
 {
-  "Name": "ResourceMonitor",
+  "Name": "ResourcesMonitor",
   "Version": "v1.0.0",
   "DisplayName": {
     "zh-cn": "资源监视器",
-    "en-us": "Resource Monitor"
+    "en-us": "Resources Monitor"
   },
   "AuthorName": "StarInk",
   "PublisherName": "Crequency",
@@ -46,5 +46,5 @@
       "ReturnValueType": "void"
     }
   ],
-  "RootStartupFileName": "ResourceMonitor.dll"
+  "RootStartupFileName": "ResourcesMonitor.WPF.dll"
 }
